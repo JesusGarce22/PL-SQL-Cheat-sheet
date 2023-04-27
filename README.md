@@ -29,4 +29,82 @@ En la sección de ejecución, se colocan las sentencias que realizan las operaci
 
 En la sección de excepción, se manejan las excepciones que pueden ocurrir durante la ejecución del bloque. En este ejemplo, se captura cualquier excepción y se muestra un mensaje de error en la salida estándar.En la sección de declaración, se declaran las variables y constantes que se utilizarán en el bloque. En este ejemplo, se declaran dos variables: emp_name y emp_salary.
 
+## Variables y constantes
+
+
+## Condicionales y loops
+
+# Condicionales
+
+IF - THEN
+
+La sentencia IF asocia una condición con una secuencia de sentencias encerradas por las palabras clave THEN y END IF. Si la condición es TRUE, las sentencias se ejecutan, y si la condición es FALSE o NULL, la sentencia IF no hace nada
+
+```
+IF (a <= 20) THEN
+ c:= c+1;
+END IF;
+```
+
+Veamos un ejemplo
+
+```
+DECLARE
+ a number(2) := 10;
+BEGIN
+   a:= 10;
+  -- check the boolean condition using if statement
+   IF( a < 20 ) THEN
+      -- if condition is true then print the following
+      dbms_output.put_line('a is less than 20 ' );
+   END IF;
+   dbms_output.put_line('value of a is : ' || a);
+END;
+```
+
+Cuando el código anterior se ejecuta en el prompt SQL, produce el siguiente resultado
+
+```
+a is less than 20
+value of a is : 10
+
+PL/SQL procedure successfully completed.
+```
+
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then.htm)
+
+IF-THEN-ELSE
+
+Este condicional nos permite agragar una accion para que se ejecute si la condicion no se cumple
+
+Ejemplo
+
+```
+DECLARE
+ a number(3) := 100;
+BEGIN
+   -- check the boolean condition using if statement
+   IF( a < 20 ) THEN
+      -- if condition is true then print the following
+      dbms_output.put_line('a is less than 20 ' );
+   ELSE
+      dbms_output.put_line('a is not less than 20 ' );
+   END IF;
+   dbms_output.put_line('value of a is : ' || a);
+END;
+```
+
+Resultado
+
+```
+a is not less than 20
+value of a is : 100
+
+PL/SQL procedure successfully completed.
+```
+
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then_else.htm)
+
+
+
 [Miro](https://miro.com/app/board/uXjVMOF4FTM=/?share_link_id=934150606948)
