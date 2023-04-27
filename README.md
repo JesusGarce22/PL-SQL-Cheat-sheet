@@ -56,7 +56,7 @@ name varchar2(25);
 address varchar2(100);
 ```
 
-### Iniacializacion de variables
+### Inicializacion de variables
 
 Siempre que se declara una variable, PL/SQL le asigna un valor por defecto de NULL. Si desea inicializar una variable con un valor distinto del valor NULL, puede hacerlo durante la declaración, utilizando cualquiera de las siguientes opciones:
 
@@ -73,7 +73,7 @@ Nota: Por recomendación asignar un valor a la hora de inicializar una variable
 
 De igual forma se puede hacer la declaración de la restricción NOT NULL para espcificar que la variable no debería ser NULL.
 
-## Alcance de las variables
+### Alcance de las variables
 
 PL/SQL permite el anidamiento de bloques, es decir, cada bloque de programa puede contener otro bloque interior. Si una variable se declara dentro de un bloque interno, no es accesible para el bloque externo. Sin embargo, si una variable se declara y es accesible para un bloque externo, también será accesible para todos los bloques internos anidados. Existen dos tipos de ámbito de las variables:
 
@@ -101,7 +101,7 @@ END;
 /
 ```
 
-## Asignación de resultados de consultas SQL a variables PL/SQL
+### Asignación de resultados de consultas SQL a variables PL/SQL
 Puede utilizar la sentencia SELECT INTO de SQL para asignar valores a variables PL/SQL. Para cada elemento de la lista SELECT, debe haber una variable correspondiente y compatible con el tipo en la lista INTO. El siguiente ejemplo ilustra el concepto. Creemos una tabla llamada CLIENTES -
 
 ```
