@@ -78,6 +78,7 @@ De igual forma se puede hacer la declaración de la restricción NOT NULL para e
 PL/SQL permite el anidamiento de bloques, es decir, cada bloque de programa puede contener otro bloque interior. Si una variable se declara dentro de un bloque interno, no es accesible para el bloque externo. Sin embargo, si una variable se declara y es accesible para un bloque externo, también será accesible para todos los bloques internos anidados. Existen dos tipos de ámbito de las variables:
 
 ***Variables locales-*** Variables declaradas en un bloque interno y no accesibles a bloques externos.
+
 ***Variables Globales-*** Variables declaradas en el bloque más externo o en un paquete.
 
 ```
