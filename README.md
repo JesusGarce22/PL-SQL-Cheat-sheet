@@ -34,9 +34,9 @@ En la sección de excepción, se manejan las excepciones que pueden ocurrir dura
 
 ## Condicionales y loops
 
-# Condicionales
+### Condicionales
 
-IF - THEN
+**IF - THEN**
 
 La sentencia IF asocia una condición con una secuencia de sentencias encerradas por las palabras clave THEN y END IF. Si la condición es TRUE, las sentencias se ejecutan, y si la condición es FALSE o NULL, la sentencia IF no hace nada
 
@@ -70,10 +70,9 @@ value of a is : 10
 
 PL/SQL procedure successfully completed.
 ```
-
 [Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then.htm)
 
-IF-THEN-ELSE
+**IF-THEN-ELSE**
 
 Este condicional nos permite agragar una accion para que se ejecute si la condicion no se cumple
 
@@ -102,7 +101,6 @@ value of a is : 100
 
 PL/SQL procedure successfully completed.
 ```
-
 [Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then_else.htm)
 
 
