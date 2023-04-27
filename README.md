@@ -103,6 +103,98 @@ PL/SQL procedure successfully completed.
 ```
 [Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then_else.htm)
 
+**IF-THEN-ELSIF**
 
+Ejemplo
+
+```
+DECLARE 
+ a number(3) := 100; 
+BEGIN 
+   IF ( a = 10 ) THEN 
+      dbms_output.put_line('Value of a is 10' ); 
+   ELSIF ( a = 20 ) THEN 
+      dbms_output.put_line('Value of a is 20' ); 
+   ELSIF ( a = 30 ) THEN 
+      dbms_output.put_line('Value of a is 30' ); 
+   ELSE 
+       dbms_output.put_line('None of the values is matching'); 
+   END IF; 
+   dbms_output.put_line('Exact value of a is: '|| a );  
+END;
+```
+
+Salida
+
+```
+None of the values is matching 
+Exact value of a is: 100 
+
+PL/SQL procedure successfully completed.
+```
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_if_then_elsif.htm)
+
+**CASE**
+
+Al igual que la sentencia IF, la sentencia CASE selecciona una secuencia de sentencias para su ejecución. Sin embargo, para seleccionar la secuencia, la sentencia CASE utiliza un selector en lugar de varias expresiones booleanas. Un selector es una expresión cuyo valor se utiliza para seleccionar una de varias alternativas.
+
+Ejemplo
+
+```
+DECLARE 
+ grade char(1) := 'A'; 
+BEGIN 
+   CASE grade 
+      when 'A' then dbms_output.put_line('Excellent'); 
+      when 'B' then dbms_output.put_line('Very good'); 
+      when 'C' then dbms_output.put_line('Well done'); 
+      when 'D' then dbms_output.put_line('You passed'); 
+      when 'F' then dbms_output.put_line('Better try again'); 
+      else dbms_output.put_line('No such grade'); 
+   END CASE; 
+END;
+```
+
+Salida
+
+```
+Excellent 
+
+PL/SQL procedure successfully completed.
+```
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_case_statement.htm)
+
+**Searched CASE**
+
+La sentencia CASE buscada no tiene selector y las cláusulas WHEN de la sentencia contienen condiciones de búsqueda que dan valores booleanos.
+
+Ejemplo
+
+```
+DECLARE 
+ grade char(1) := 'B'; 
+BEGIN 
+   case  
+      when grade = 'A' then dbms_output.put_line('Excellent'); 
+      when grade = 'B' then dbms_output.put_line('Very good'); 
+      when grade = 'C' then dbms_output.put_line('Well done'); 
+      when grade = 'D' then dbms_output.put_line('You passed'); 
+      when grade = 'F' then dbms_output.put_line('Better try again'); 
+      else dbms_output.put_line('No such grade'); 
+   end case; 
+END;
+```
+
+Salida 
+
+```
+Very good 
+
+PL/SQL procedure successfully completed.
+
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_searched_case.htm)
+```
+
+### Loops
 
 [Miro](https://miro.com/app/board/uXjVMOF4FTM=/?share_link_id=934150606948)
