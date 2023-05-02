@@ -600,4 +600,24 @@ value of a: 19
 
 PL/SQL procedure successfully completed.
 ```
+
+## Funciones
+
+
+
+## Excepciones
+
+
+
+## Cursores de SQL
+
+
+
+## Triggers 
+
+
+
+## Diferencias entre los triggers  BEFORE, AFTER, e  INSTEAD OF
+
+
 [Miro](https://miro.com/app/board/uXjVMOF4FTM=/?share_link_id=934150606948)
