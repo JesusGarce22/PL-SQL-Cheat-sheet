@@ -744,7 +744,7 @@ PL/SQL procedure successfully completed.
 PL/SQL proporciona muchas excepciones predefinidas, que se ejecutan cuando un programa viola cualquier regla de la base de datos. Por ejemplo, la excepción predefinida NO_DATA_FOUND se genera cuando una declaración SELECT INTO no devuelve filas.
 
 |Exception|	Oracle Error	|SQLCODE|	Description|
-|-------------------------------------------------------------------------------------------------------------------------|
+|-----------------|---------|---------|-------------|
 |ACCESS_INTO_NULL|	06530	|-6530|	It is raised when a null object is automatically assigned a value.|
 |CASE_NOT_FOUND|	06592|	-6592|	It is raised when none of the choices in the WHEN clause of a CASE statement is selected, and there is no ELSE clause.|
 |COLLECTION_IS_NULL|	06531|	-6531|	It is raised when a program attempts to apply collection methods other than EXISTS to an uninitialized nested table or varray, or the program attempts to assign values to the elements of an uninitialized nested table or varray.|
