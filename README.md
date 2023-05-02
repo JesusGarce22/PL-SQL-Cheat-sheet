@@ -768,7 +768,149 @@ PL/SQL proporciona muchas excepciones predefinidas, que se ejecutan cuando un pr
 
 ## Triggers 
 
+En este capítulo, discutiremos los Triggers en PL/SQL. Los disparadores son programas almacenados, que se ejecutan o disparan automáticamente cuando ocurren algunos eventos. Los disparadores, de hecho, están escritos para ser ejecutados en respuesta a cualquiera de los siguientes eventos:
 
+* Una declaración de manipulación de base de datos (DML) (DELETE, INSERT, or UPDATE)
+
+* Una instrucción de definición de base de datos (DDL) (CREATE, ALTER o DROP).
+
+* Una operación de base de datos (SERVERERROR, LOGON, LOGOFF, STARTUP o SHUTDOWN).
+
+* Los triggers se pueden definir en la tabla, la vista, el esquema o la base de datos con la que está asociado el evento.
+
+**Beneficios de los triggers**
+
+Los disparadores se pueden escribir para los siguientes propósitos:
+
+* Generando algunos valores de columna derivados automáticamente
+* Hacer cumplir la integridad referencial
+* Registro de eventos y almacenamiento de información sobre el acceso a la tabla
+* Revisión de cuentas
+* Replicación síncrona de tablas
+* Imposición de autorizaciones de seguridad
+* Prevención de transacciones no válidas
+
+**Crear Triggers**
+
+La sintaxis para crear un trigger es:
+
+```
+CREATE [OR REPLACE ] TRIGGER trigger_name 
+{BEFORE | AFTER | INSTEAD OF }  
+{INSERT [OR] | UPDATE [OR] | DELETE}  
+[OF col_name]  
+ON table_name  
+[REFERENCING OLD AS o NEW AS n]  
+[FOR EACH ROW]  
+WHEN (condition)   
+DECLARE 
+   Declaration-statements 
+BEGIN  
+   Executable-statements 
+EXCEPTION 
+   Exception-handling-statements 
+END;
+```
+
+Dónde,
+
+CREATE [OR REPLACE] TRIGGER trigger_name: crea o reemplaza un activador existente con el trigger_name.
+
+{BEFORE | AFTER | INSTEAD OF}: especifica cuándo se ejecutará el disparador. La cláusula INSTEAD OF se usa para crear un disparador en una vista.
+
+{INSERT [OR] | UPDATE [OR] | DELETE}: especifica la operación DML.
+
+[OF col_name]: especifica el nombre de la columna que se actualizará.
+
+[ON table_name]: especifica el nombre de la tabla asociada con el disparador.
+
+[REFERENCING OLD AS o NEW AS n]: esto le permite hacer referencia a valores nuevos y antiguos para varias instrucciones DML, como INSERTAR, ACTUALIZAR y ELIMINAR.
+
+[FOR EACH ROW]: especifica un activador de nivel de fila, es decir, el activador se ejecutará para cada fila afectada. De lo contrario, el activador se ejecutará solo una vez cuando se ejecute la instrucción SQL, lo que se denomina activador de nivel de tabla.
+
+WHEN (condition): proporciona una condición para las filas para las que se dispararía el disparador. Esta cláusula solo es válida para activadores de nivel de fila.
+
+Ejemplo
+
+```
+Select * from customers; 
+
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
++----+----------+-----+-----------+----------+
+```
+
+El siguiente programa crea un activador de nivel de fila para la tabla de clientes que se activaría para las operaciones INSERT or UPDATE or DELETE realizadas en la tabla CUSTOMERS. Este activador mostrará la diferencia salarial entre los valores antiguos y los nuevos valores.
+
+```
+CREATE OR REPLACE TRIGGER display_salary_changes 
+BEFORE DELETE OR INSERT OR UPDATE ON customers 
+FOR EACH ROW 
+WHEN (NEW.ID > 0) 
+DECLARE 
+ sal_diff number; 
+BEGIN 
+   sal_diff := :NEW.salary  - :OLD.salary; 
+   dbms_output.put_line('Old salary: ' || :OLD.salary); 
+   dbms_output.put_line('New salary: ' || :NEW.salary); 
+   dbms_output.put_line('Salary difference: ' || sal_diff); 
+END; 
+/
+```
+
+Salida
+
+```
+Trigger created.
+```
+
+Los siguientes puntos deben ser considerados aquí:
+
+Las referencias OLD y NEW no están disponibles para disparadores a nivel de tabla, sino que puede usarlas para disparadores a nivel de registro.
+
+Si desea consultar la tabla en el mismo disparador, debe usar la palabra clave AFTER, porque los disparadores pueden consultar la tabla o cambiarla nuevamente solo después de que se hayan aplicado los cambios iniciales y la tabla vuelva a tener un estado coherente.
+
+El activador anterior se ha escrito de tal manera que se activará antes de cualquier operación DELETE, INSERT o UPDATE en la tabla, pero puede escribir su activador en una o varias operaciones, por ejemplo, BEFORE DELETE, que se activará cada vez que se produzca un registro. se eliminará utilizando la operación DELETE en la tabla.
+
+**Triggering a Trigger**
+
+Realicemos algunas operaciones DML en la tabla CUSTOMERS. Aquí hay una declaración INSERT, que creará un nuevo registro en la tabla
+
+```
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (7, 'Kriti', 22, 'HP', 7500.00 );
+```
+
+Cuando se crea un registro en la tabla CUSTOMERS, se activará el activador de creación anterior, display_salary_changes y mostrará el siguiente resultado
+
+```
+Old salary: 
+New salary: 7500 
+Salary difference:
+```
+
+Debido a que este es un nuevo récord, el salario anterior no está disponible y el resultado anterior es nulo. Realicemos ahora una operación DML más en la tabla CUSTOMERS. La instrucción UPDATE actualizará un registro existente en la tabla.
+
+```
+UPDATE customers 
+SET salary = salary + 500 
+WHERE id = 2;
+```
+
+Cuando se actualiza un registro en la tabla CUSTOMERS, se activará el activador de creación anterior, display_salary_changes y mostrará el siguiente resultado.
+
+```
+Old salary: 1500 
+New salary: 2000 
+Salary difference: 500
+```
 
 ## Diferencias entre los triggers  BEFORE, AFTER, e  INSTEAD OF
 
