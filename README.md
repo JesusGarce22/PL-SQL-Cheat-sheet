@@ -609,8 +609,8 @@ PL/SQL procedure successfully completed.
 
 Una excepción es una condición de error durante la ejecución de un programa. PL/SQL ayuda a los programadores a capturar tales condiciones usando el bloque EXCEPTION en el programa y se toma una acción apropiada contra la condición de error. Hay dos tipos de excepciones:
 
-Excepciones definidas por el sistema
-Excepciones definidas por el usuario
+* Excepciones definidas por el sistema
+* Excepciones definidas por el usuario
 
 La sintaxis general para el manejo de excepciones es la siguiente. Aquí puede enumerar tantas excepciones como pueda manejar. La excepción predeterminada se manejará usando WHEN otros THEN:
 
