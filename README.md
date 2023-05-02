@@ -314,4 +314,290 @@ PL/SQL procedure successfully completed.
 
 ### Loops
 
+**Basic Loop**
+
+La estructura básica del bucle incluye una secuencia de sentencias entre las sentencias LOOP y END LOOP. Con cada iteración, la secuencia de sentencias se ejecuta y luego el control se reanuda en la parte superior del bucle.
+
+```
+LOOP
+ Sequence of statements;
+END LOOP;
+
+Veamos un ejemplo
+
+DECLARE
+ x number := 10;
+BEGIN
+   LOOP
+      dbms_output.put_line(x);
+      x := x + 10;
+      IF x > 50 THEN
+         exit;
+      END IF;
+   END LOOP;
+   -- after exit, control resumes here
+   dbms_output.put_line('After Exit x is: ' || x);
+END;
+```
+Salida
+```
+10
+20
+30
+40
+50
+After Exit x is: 60
+
+PL/SQL procedure successfully completed.
+```
+
+Puede utilizar la sentencia EXIT WHEN en lugar de la sentencia EXIT
+
+```
+DECLARE
+ x number := 10;
+BEGIN
+   LOOP
+      dbms_output.put_line(x);
+      x := x + 10;
+      exit WHEN x > 50;
+   END LOOP;
+   -- after exit, control resumes here
+   dbms_output.put_line('After Exit x is: ' || x);
+END;
+```
+Salida
+```
+10
+20
+30
+40
+50
+After Exit x is: 60
+
+PL/SQL procedure successfully completed.
+```
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_basic_loop.htm)
+
+**WHILE LOOP**
+
+Una sentencia WHILE LOOP en el lenguaje de programación PL/SQL ejecuta repetidamente una sentencia objetivo mientras una condición dada sea verdadera.
+
+```
+WHILE condition LOOP
+ sequence_of_statements
+END LOOP;
+```
+
+Ejemplo
+
+```
+DECLARE
+ a number(2) := 10;
+BEGIN
+   WHILE a < 20 LOOP
+      dbms_output.put_line('value of a: ' || a);
+      a := a + 1;
+   END LOOP;
+END;
+```
+
+Salida
+
+```
+value of a: 10
+value of a: 11
+value of a: 12
+value of a: 13
+value of a: 14
+value of a: 15
+value of a: 16
+value of a: 17
+value of a: 18
+value of a: 19
+
+PL/SQL procedure successfully completed.
+```
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_while_loop.htm)
+
+**FOR LOOP**
+
+Un BUCLE FOR es una estructura de control de repetición que le permite escribir eficientemente un bucle que necesita ejecutarse un número específico de veces.
+
+FOR counter IN initial_value .. final_value LOOP
+ sequence_of_statements;
+END LOOP;
+
+A continuación se muestra el flujo de control en un bucle For -
+
+El paso inicial se ejecuta primero, y sólo una vez. Este paso permite declarar e inicializar cualquier variable de control del bucle.
+
+A continuación, se evalúa la condición, es decir, valor_inicial .. valor_final. Si es TRUE, se ejecuta el cuerpo del bucle. Si es FALSE, el cuerpo del bucle no se ejecuta y el flujo de control salta a la siguiente sentencia justo después del bucle for.
+
+Después de que el cuerpo del bucle for se ejecuta, el valor de la variable contador se incrementa o disminuye.
+
+La condición se evalúa de nuevo. Si es TRUE, el bucle se ejecuta y el proceso se repite (cuerpo del bucle, luego paso de incremento, y luego otra vez la condición). Cuando la condición se convierte en FALSE, el bucle FOR-LOOP termina.
+
+Las siguientes son algunas características especiales de PL/SQL para bucle -
+
+El valor_inicial y el valor_final de la variable o contador del bucle pueden ser literales, variables o expresiones pero deben evaluarse como números. En caso contrario, PL/SQL lanza la excepción predefinida VALUE_ERROR.
+
+No es necesario que el valor_inicial sea 1; sin embargo, el incremento (o decremento) del contador del bucle debe ser 1.
+
+PL/SQL permite la determinación del rango del bucle dinámicamente en tiempo de ejecución.
+
+Ejemplo
+```
+DECLARE
+ a number(2);
+BEGIN
+   FOR a in 10 .. 20 LOOP
+      dbms_output.put_line('value of a: ' || a);
+  END LOOP;
+END;
+/
+```
+Salida
+```
+value of a: 10
+value of a: 11
+value of a: 12
+value of a: 13
+value of a: 14
+value of a: 15
+value of a: 16
+value of a: 17
+value of a: 18
+value of a: 19
+value of a: 20
+
+PL/SQL procedure successfully completed.
+```
+
+Por defecto, la iteración procede desde el valor inicial al valor final, generalmente hacia arriba desde el límite inferior al superior. Puede invertir este orden utilizando la palabra clave REVERSE. En tal caso, la iteración procede en sentido contrario. Después de cada iteración, se decrementa el contador del bucle.
+
+Sin embargo, debe escribir los límites de rango en orden ascendente (no descendente).
+```
+DECLARE
+ a number(2) ;
+BEGIN
+   FOR a IN REVERSE 10 .. 20 LOOP
+      dbms_output.put_line('value of a: ' || a);
+   END LOOP;
+END;
+```
+Salida
+```
+value of a: 20
+value of a: 19
+value of a: 18
+value of a: 17
+value of a: 16
+value of a: 15
+value of a: 14
+value of a: 13
+value of a: 12
+value of a: 11
+value of a: 10
+
+PL/SQL procedure successfully completed.
+```
+[Fuente](https://www.tutorialspoint.com/plsql/plsql_for_loop.htm)
+
+Tambien, puedes tener Loops anidados como se muestra a continuacion
+```
+LOOP 
+ Sequence of statements1 
+   LOOP 
+      Sequence of statements2 
+   END LOOP; 
+END LOOP;
+
+FOR counter1 IN initial_value1 .. final_value1 LOOP 
+ sequence_of_statements1 
+   FOR counter2 IN initial_value2 .. final_value2 LOOP 
+      sequence_of_statements2 
+   END LOOP; 
+END LOOP;
+
+WHILE condition1 LOOP 
+ sequence_of_statements1 
+   WHILE condition2 LOOP 
+      sequence_of_statements2 
+   END LOOP; 
+END LOOP;
+```
+
+Las sentencias de control de bucle
+Las sentencias de control de bucle cambian la ejecución de su secuencia normal. Cuando la ejecución abandona un ámbito, se destruyen todos los objetos automáticos que se crearon en ese ámbito.
+
+PL/SQL soporta las siguientes sentencias de control. Etiquetar bucles también ayuda a tomar el control fuera de un bucle.
+
+**EXIT**
+
+```
+DECLARE 
+ a number(2) := 10; 
+BEGIN 
+   -- while loop execution  
+   WHILE a < 20 LOOP 
+      dbms_output.put_line ('value of a: ' || a); 
+      a := a + 1; 
+      IF a > 15 THEN 
+         -- terminate the loop using the exit statement 
+         EXIT; 
+      END IF; 
+   END LOOP; 
+END;
+```
+Salida
+```
+value of a: 10 
+value of a: 11 
+value of a: 12 
+value of a: 13 
+value of a: 14 
+value of a: 15 
+
+PL/SQL procedure successfully completed.
+```
+
+**CONTINUE**
+
+La sentencia CONTINUE hace que el bucle se salte el resto de su cuerpo y vuelva a probar inmediatamente su condición antes de reiterarse. En otras palabras, fuerza la siguiente iteración del bucle, saltándose cualquier código intermedio.
+
+Ejemplo
+
+```
+DECLARE 
+ a number(2) := 10; 
+BEGIN 
+   -- while loop execution  
+   WHILE a < 20 LOOP 
+      dbms_output.put_line ('value of a: ' || a); 
+      a := a + 1; 
+      IF a = 15 THEN 
+         -- skip the loop using the CONTINUE statement 
+         a := a + 1; 
+         CONTINUE; 
+      END IF; 
+   END LOOP; 
+END;
+```
+
+Salida
+
+```
+value of a: 10 
+value of a: 11 
+value of a: 12 
+value of a: 13 
+value of a: 14 
+value of a: 16 
+value of a: 17 
+value of a: 18 
+value of a: 19 
+
+PL/SQL procedure successfully completed.
+```
 [Miro](https://miro.com/app/board/uXjVMOF4FTM=/?share_link_id=934150606948)
