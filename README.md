@@ -607,7 +607,160 @@ PL/SQL procedure successfully completed.
 
 ## Excepciones
 
+Una excepción es una condición de error durante la ejecución de un programa. PL/SQL ayuda a los programadores a capturar tales condiciones usando el bloque EXCEPTION en el programa y se toma una acción apropiada contra la condición de error. Hay dos tipos de excepciones:
 
+Excepciones definidas por el sistema
+Excepciones definidas por el usuario
+
+La sintaxis general para el manejo de excepciones es la siguiente. Aquí puede enumerar tantas excepciones como pueda manejar. La excepción predeterminada se manejará usando WHEN otros THEN:
+
+```
+DECLARE 
+ <declarations section> 
+BEGIN 
+   <executable command(s)> 
+EXCEPTION 
+   <exception handling goes here > 
+   WHEN exception1 THEN  
+      exception1-handling-statements  
+   WHEN exception2  THEN  
+      exception2-handling-statements  
+   WHEN exception3 THEN  
+      exception3-handling-statements 
+   ........ 
+   WHEN others THEN 
+      exception3-handling-statements 
+END;
+```
+
+Ejemplo
+
+```
+DECLARE 
+ c_id customers.id%type := 8; 
+   c_name customerS.Name%type; 
+   c_addr customers.address%type; 
+BEGIN 
+   SELECT  name, address INTO  c_name, c_addr 
+   FROM customers 
+   WHERE id = c_id;  
+   DBMS_OUTPUT.PUT_LINE ('Name: '||  c_name); 
+   DBMS_OUTPUT.PUT_LINE ('Address: ' || c_addr); 
+
+EXCEPTION 
+   WHEN no_data_found THEN 
+      dbms_output.put_line('No such customer!'); 
+   WHEN others THEN 
+      dbms_output.put_line('Error!'); 
+END; 
+/
+```
+
+Salida
+
+```
+No such customer! 
+
+PL/SQL procedure successfully completed.
+```
+El programa anterior muestra el nombre y la dirección de un cliente cuya identificación se proporciona. Dado que no hay ningún cliente con valor de ID 8, el programa genera la excepción de tiempo de ejecución NO_DATA_FOUND, que se captura en el bloque EXCEPCIÓN.
+
+**Raising Exceptions**
+
+el programador puede generar excepciones explícitamente mediante el comando RAISE.
+
+La siguiente es la sintaxis simple para generar una excepción:
+
+```
+DECLARE 
+ exception_name EXCEPTION; 
+BEGIN 
+   IF condition THEN 
+      RAISE exception_name; 
+   END IF; 
+EXCEPTION 
+   WHEN exception_name THEN 
+   statement; 
+END;
+```
+
+Puede usar la sintaxis anterior para generar la excepción estándar de Oracle o cualquier excepción definida por el usuario.
+
+**Excepciones definidas por el usuario**
+
+PL/SQL le permite definir sus propias excepciones según la necesidad de su programa. Una excepción definida por el usuario debe declararse y luego generarse explícitamente, utilizando una instrucción RAISE o el procedimiento DBMS_STANDARD.RAISE_APPLICATION_ERROR.
+
+La sintaxis para declarar una excepción es:
+
+```
+DECLARE 
+  my-exception EXCEPTION;
+```
+
+Ejemplo
+
+```
+DECLARE 
+ c_id customers.id%type := &cc_id; 
+   c_name customerS.Name%type; 
+   c_addr customers.address%type;  
+   -- user defined exception 
+   ex_invalid_id  EXCEPTION; 
+BEGIN 
+   IF c_id <= 0 THEN 
+      RAISE ex_invalid_id; 
+   ELSE 
+      SELECT  name, address INTO  c_name, c_addr 
+      FROM customers 
+      WHERE id = c_id;
+      DBMS_OUTPUT.PUT_LINE ('Name: '||  c_name);  
+      DBMS_OUTPUT.PUT_LINE ('Address: ' || c_addr); 
+   END IF; 
+
+EXCEPTION 
+   WHEN ex_invalid_id THEN 
+      dbms_output.put_line('ID must be greater than zero!'); 
+   WHEN no_data_found THEN 
+      dbms_output.put_line('No such customer!'); 
+   WHEN others THEN 
+      dbms_output.put_line('Error!');  
+END; 
+/
+```
+
+Salida
+
+```
+Enter value for cc_id: -6 (let's enter a value -6) 
+old 2: c_id customers.id%type := &cc_id; 
+new  2: c_id customers.id%type := -6; 
+ID must be greater than zero! 
+ 
+PL/SQL procedure successfully completed.
+```
+
+**Excepciones predefinidas**
+
+PL/SQL proporciona muchas excepciones predefinidas, que se ejecutan cuando un programa viola cualquier regla de la base de datos. Por ejemplo, la excepción predefinida NO_DATA_FOUND se genera cuando una declaración SELECT INTO no devuelve filas.
+
+|Exception|	Oracle Error	|SQLCODE|	Description|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|ACCESS_INTO_NULL|	06530	|-6530|	It is raised when a null object is automatically assigned a value.|
+|CASE_NOT_FOUND|	06592|	-6592|	It is raised when none of the choices in the WHEN clause of a CASE statement is selected, and there is no ELSE clause.|
+|COLLECTION_IS_NULL|	06531|	-6531|	It is raised when a program attempts to apply collection methods other than EXISTS to an uninitialized nested table or varray, or the program attempts to assign values to the elements of an uninitialized nested table or varray.|
+|DUP_VAL_ON_INDEX|	00001	|-1	|It is raised when duplicate values are attempted to be stored in a column with unique index.|
+|INVALID_CURSOR|	01001	|-1001|	It is raised when attempts are made to make a cursor operation that is not allowed, such as closing an unopened cursor.|
+|INVALID_NUMBER|	01722	|-1722|	It is raised when the conversion of a character string into a number fails because the string does not represent a valid number.|
+|LOGIN_DENIED|	01017|	-1017|	It is raised when a program attempts to log on to the database with an invalid username or password.|
+|NO_DATA_FOUND|	01403	|+100|	It is raised when a SELECT INTO statement returns no rows.|
+|NOT_LOGGED_ON|	01012|	-1012|It is raised when a database call is issued without being connected to the database.|
+|PROGRAM_ERROR|	06501	|-6501|	It is raised when PL/SQL has an internal problem.|
+|ROWTYPE_MISMATCH|	06504	|-6504	|It is raised when a cursor fetches value in a variable having incompatible data type.|
+|SELF_IS_NULL|	30625	|-30625|	It is raised when a member method is invoked, but the instance of the object type was not initialized.|
+|STORAGE_ERROR|	06500|	-6500|	It is raised when PL/SQL ran out of memory or memory was corrupted.|
+|TOO_MANY_ROWS|	01422|	-1422|	It is raised when a SELECT INTO statement returns more than one row.|
+|VALUE_ERROR|	06502	|-6502|	It is raised when an arithmetic, conversion, truncation, or sizeconstraint error occurs.|
+|ZERO_DIVIDE|	01476|	1476|	It is raised when an attempt is made to divide a number by zero.|
 
 ## Cursores de SQL
 
