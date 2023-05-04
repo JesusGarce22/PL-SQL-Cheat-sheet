@@ -602,7 +602,9 @@ PL/SQL procedure successfully completed.
 ```
 
 ## Funciones
+
 ### Ejemplos:
+
 ```
 DECLARE 
    a number; 
