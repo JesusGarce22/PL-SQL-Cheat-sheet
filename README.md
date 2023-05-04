@@ -834,6 +834,7 @@ Los cursores implícitos son creados automáticamente por Oracle cada vez que se
 
 ***Tabla:***
 
+```
 Select * from customers;  
 
 +----+----------+-----+-----------+----------+ 
@@ -846,6 +847,7 @@ Select * from customers;
 |  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
 |  6 | Komal    |  22 | MP        |  4500.00 | 
 +----+----------+-----+-----------+----------+
+```
 
 ***Procedimiento:***
 
