@@ -819,7 +819,7 @@ Un cursor es un puntero a esta área de contexto. PL/SQL controla el área de co
 
 Los cursores implícitos son creados automáticamente por Oracle cada vez que se ejecuta una sentencia SQL, cuando no hay un cursor explícito para la sentencia. Los programadores no pueden controlar los cursores implícitos ni la información que contienen. Para operaciones INSERT, el cursor contiene los datos que necesitan ser insertados. Para operaciones UPDATE y DELETE, el cursor identifica las filas que se verán afectadas.
 
-#### Atributos
+### Atributos
 ***%FOUND:*** Devuelve TRUE si una sentencia INSERT, UPDATE o DELETE afectó a una o más filas o una sentencia SELECT INTO devolvió una o más filas. En caso contrario, devuelve FALSE.
 
 ***%NOTFOUND%:*** El opuesto lógico de %FOUND. Devuelve TRUE si una sentencia INSERT, UPDATE o DELETE no ha afectado a ninguna fila, o si una sentencia SELECT INTO no ha devuelto ninguna fila. En caso contrario, devuelve FALSE.
