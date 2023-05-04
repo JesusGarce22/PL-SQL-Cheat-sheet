@@ -830,6 +830,120 @@ Los cursores implícitos son creados automáticamente por Oracle cada vez que se
 
 ***%ROWCOUNT:*** Devuelve el número de filas afectadas por una sentencia INSERT, UPDATE o DELETE, o devueltas por una sentencia SELECT INTO.
 
+## Ejemplos
+
+***Tabla:***
+
+Select * from customers;  
+
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
++----+----------+-----+-----------+----------+
+
+***Procedimiento:***
+
+```
+DECLARE  
+   total_rows number(2); 
+BEGIN 
+   UPDATE customers 
+   SET salary = salary + 500; 
+   IF sql%notfound THEN 
+      dbms_output.put_line('no customers selected'); 
+   ELSIF sql%found THEN 
+      total_rows := sql%rowcount;
+      dbms_output.put_line( total_rows || ' customers selected '); 
+   END IF;  
+END; 
+/  
+```
+
+***Retorno:***
+
+```
+6 customers selected  
+
+PL/SQL procedure successfully completed.
+```
+## Cursores explicitos
+
+Los cursores explícitos son cursores definidos por el programador para obtener un mayor control sobre el área de contexto. Un cursor explícito debe definirse en la sección de declaración del Bloque PL/SQL. Se crea en una sentencia SELECT que devuelve más de una fila.
+
+Sintaxis para crear este tipo de cursor:
+
+```
+CURSOR cursor_name IS select_statement; 
+```
+### Pasos para incluirlo:
+
+***Declaración del cursor:***
+
+```
+CURSOR c_customers IS 
+   SELECT id, name, address FROM customers;
+```
+
+***Apertura del cursor:***
+
+```
+OPEN c_customers;
+```
+
+***Recuperación del cursor:***
+
+```
+FETCH c_customers INTO c_id, c_name, c_addr; 
+```
+
+***Cerrar el cursor:***
+
+```
+CLOSE c_customers;
+```
+
+### Ejemplo:
+
+***Procedimiento:***
+
+```
+DECLARE 
+   c_id customers.id%type; 
+   c_name customers.name%type; 
+   c_addr customers.address%type; 
+   CURSOR c_customers is 
+      SELECT id, name, address FROM customers; 
+BEGIN 
+   OPEN c_customers; 
+   LOOP 
+   FETCH c_customers into c_id, c_name, c_addr; 
+      EXIT WHEN c_customers%notfound; 
+      dbms_output.put_line(c_id || ' ' || c_name || ' ' || c_addr); 
+   END LOOP; 
+   CLOSE c_customers; 
+END; 
+/
+```
+
+***Retorno:***
+
+```
+1 Ramesh Ahmedabad  
+2 Khilan Delhi  
+3 kaushik Kota     
+4 Chaitali Mumbai  
+5 Hardik Bhopal   
+6 Komal MP  
+  
+PL/SQL procedure successfully completed.
+```
+
 ## Triggers 
 
 En este capítulo, discutiremos los Triggers en PL/SQL. Los disparadores son programas almacenados, que se ejecutan o disparan automáticamente cuando ocurren algunos eventos. Los disparadores, de hecho, están escritos para ser ejecutados en respuesta a cualquiera de los siguientes eventos:
