@@ -602,7 +602,54 @@ PL/SQL procedure successfully completed.
 ```
 
 ## Funciones
+### Ejemplos:
+```
+DECLARE 
+   a number; 
+   b number; 
+   c number;
+PROCEDURE findMin(x IN number, y IN number, z OUT number) IS 
+BEGIN 
+   IF x < y THEN 
+      z:= x; 
+   ELSE 
+      z:= y; 
+   END IF; 
+END;   
+BEGIN 
+   a:= 23; 
+   b:= 45; 
+   findMin(a, b, c); 
+   dbms_output.put_line(' Minimum of (23, 45) : ' || c); 
+END; 
+/
+```
+La declaración del modo IN dentro de los parametros de la función es dada para los parametros de entrada de la misma. Mientras que el OUT es para el returno valor de retorno de la función.
+```
+DECLARE 
+   a number; 
+PROCEDURE squareNum(x IN OUT number) IS 
+BEGIN 
+  x := x * x; 
+END;  
+BEGIN 
+   a:= 23; 
+   squareNum(a); 
+   dbms_output.put_line(' Square of (23): ' || a); 
+END; 
+/
+```
+La declaración del modo IN OUT dentro de los parametros de la función es para especificar que el parametro(en este caso "x") va a ser el valor de entrada y a la misma vez el de retorno de la función.
 
+```
+CREATE OR REPLACE PROCEDURE greetings 
+AS 
+BEGIN 
+   dbms_output.put_line('Hello World!'); 
+END; 
+/
+```
+El caso anterior representa un ejemplo de procedimiento, ya que únicamente va ejecutar o realizar alguna tarea en específico sin retornar ningún valor.
 
 
 ## Excepciones
@@ -764,7 +811,22 @@ PL/SQL proporciona muchas excepciones predefinidas, que se ejecutan cuando un pr
 
 ## Cursores de SQL
 
+Oracle crea un área de memoria, conocida como área de contexto, para procesar una sentencia SQL, que contiene toda la información necesaria para procesar la sentencia; por ejemplo, el número de filas procesadas, etc.
 
+Un cursor es un puntero a esta área de contexto. PL/SQL controla el área de contexto a través de un cursor. Un cursor contiene las filas (una o más) devueltas por una sentencia SQL.
+
+### Cursores implicitos
+
+Los cursores implícitos son creados automáticamente por Oracle cada vez que se ejecuta una sentencia SQL, cuando no hay un cursor explícito para la sentencia. Los programadores no pueden controlar los cursores implícitos ni la información que contienen. Para operaciones INSERT, el cursor contiene los datos que necesitan ser insertados. Para operaciones UPDATE y DELETE, el cursor identifica las filas que se verán afectadas.
+
+#### Atributos
+***%FOUND:*** Devuelve TRUE si una sentencia INSERT, UPDATE o DELETE afectó a una o más filas o una sentencia SELECT INTO devolvió una o más filas. En caso contrario, devuelve FALSE.
+
+***%NOTFOUND%:*** El opuesto lógico de %FOUND. Devuelve TRUE si una sentencia INSERT, UPDATE o DELETE no ha afectado a ninguna fila, o si una sentencia SELECT INTO no ha devuelto ninguna fila. En caso contrario, devuelve FALSE.
+
+***%ISOPEN:*** Siempre devuelve FALSE para cursores implícitos, porque Oracle cierra el cursor SQL automáticamente después de ejecutar su sentencia SQL asociada.
+
+***%ROWCOUNT:*** Devuelve el número de filas afectadas por una sentencia INSERT, UPDATE o DELETE, o devueltas por una sentencia SELECT INTO.
 
 ## Triggers 
 
