@@ -603,6 +603,46 @@ PL/SQL procedure successfully completed.
 
 ## Funciones
 
+Crear funciones
+
+```
+CREATE [OR REPLACE] FUNCTION function_name 
+[(parameter_name [IN | OUT | IN OUT] type [, ...])] 
+RETURN return_datatype 
+{IS | AS} 
+BEGIN 
+   < function_body > 
+END [function_name];
+```
+ Ejemplo
+ 
+ ```
+Select * from customers; 
+ 
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
++----+----------+-----+-----------+----------+  
+```
+
+```
+CREATE OR REPLACE FUNCTION totalCustomers 
+RETURN number IS 
+   total number(2) := 0; 
+BEGIN 
+   SELECT count(*) into total 
+   FROM customers; 
+    
+   RETURN total; 
+END; 
+/ 
+```
 ### Ejemplos:
 
 ```
